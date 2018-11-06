@@ -3,9 +3,9 @@
   "version": "0.4.0",
   "description": "Converts a RAML data type into JSON schema, and back",
   "main": "src/index.js",
-  "author": "MuleSoft, Inc.",
+  "author": "BIOCAD",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/raml-org/ramldt2jsonschema",
+  "homepage": "https://github.com/biocad/ramldt2jsonschema",
   "files": [
     "src/**",
     "bin/**"
@@ -17,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/raml-org/ramldt2jsonschema.git"
+    "url": "git://github.com/biocad/ramldt2jsonschema.git"
   },
   "bugs": {
     "url": "https://github.com/raml-org/ramldt2jsonschema/issues"
