@@ -1,0 +1,449 @@
+#%RAML 1.0 Library
+types:
+  TypeParentType0:
+    type: string
+    displayName: projectInitiationOrder
+    description: Ссылка на подписанный приказ об инициации в СЭД
+  TypeParentType1:
+    type: string
+    displayName: projectHoldOrder
+    description: Ссылка на подписанный приказ о приостановке в СЭД
+  TypeParentType2:
+    type: string
+    displayName: projectClosureOrder
+    description: Ссылка на подписанный приказ о закрытии в СЭД
+  TypeParentType3:
+    type: string
+    displayName: TMP
+    description: Ссылка на актуальную версию TMP в SharePoint
+  TypeParentType4:
+    type: string
+    displayName: technicalTask
+    description: Ссылка на актуальную версию ТЗ в SharePoint
+  TypeParentType5:
+    type: string
+    displayName: workingProjectGroup
+    description: >-
+      Ссылка на группу проекта в Outlook. Название группы должно совпадать с
+      идентификатором проекта
+  TypeParentType6:
+    type: string
+    displayName: patentPurityReport
+    description: Ссылка на отчет о патентной чистоте и патентуемости
+  TypeParentType7:
+    type: string
+    displayName: patent
+    description: Ссылка на собственный патент
+  TypeParentType8:
+    type: string
+    displayName: marketingReport
+    description: Ссылка на маркетинговое обоснование
+  TypeParentType9:
+    type: string
+    displayName: financialReport
+    description: Ссылка на финансово-экономическое обоснование
+  TypeParentType10:
+    type: string
+    displayName: dsTechnology
+    description: Ссылка на протоколы разработки технологии
+  TypeParentType11:
+    type: string
+    displayName: transferProtocol
+    description: Ссылка на протокол технологического трансфера
+  TypeParentType12:
+    type: string
+    enum:
+      - ct
+    description: Проект по проведению клинических исследований
+  TypeParentType13:
+    type: string
+    enum:
+      - pct
+    description: Проект по проведению доклинических исследований
+  TypeParentType14:
+    type: string
+    enum:
+      - reg
+    description: Проект по получению РУ
+  TypeParentType15:
+    type: string
+    enum:
+      - inn
+    description: Проект по регистрации в ВОЗ
+  TypeParentType16:
+    type: string
+    enum:
+      - xyz
+    description: >-
+      Уточнение данных, когда невозможно восстановить полную информацию по
+      проекту
+  TypeParentType17:
+    type: string
+    enum:
+      - it
+    description: 'Разработка новых систем, сервисов и сайтов'
+  TypeParentType18:
+    type: string
+    enum:
+      - infra
+    description: Инфраструктурные проекты в IT
+  TypeParentType19:
+    type: string
+    enum:
+      - hr
+    description: 'Работа с сотрудниками, T&D, рекрутинг'
+  TypeParentType20:
+    type: string
+    enum:
+      - adm
+    description: Административная деятельность компании
+  TypeParentType21:
+    type: string
+    enum:
+      - tech
+    description: >-
+      Проекты по созданию, развитию, модернизации существующей технологической
+      базы
+  TypeParentType22:
+    type: string
+    enum:
+      - dev
+    description: 'Строительство и переоснащение новых зданий, капитальных объектов компании'
+  TypeParentType23:
+    type: string
+    enum:
+      - pr
+    description: 'Организация выставки, концерта'
+  TypeParentType24:
+    type: string
+    enum:
+      - prod
+    description: Производственные проекты
+  TypeParentType25:
+    type: string
+    enum:
+      - qa
+    description: Проекты Департамента Качества
+  TypeParentType26:
+    type: string
+    enum:
+      - snm
+    description: Проект S&M
+  TypeParentType27:
+    type: string
+    enum:
+      - fin
+    description: Проекты финансового планирования и контроля
+  TagsItemsParentType0:
+    type: string
+    enum:
+      - CI 01
+    description: "СИ-01. Обеспечить конкурентоспособный портфель воспроизведенных и оригинальных препаратов с целью удержания лидерства \_на рынке ЕАЭС"
+  TagsItemsParentType1:
+    type: string
+    enum:
+      - CI 02
+    description: >-
+      СИ-02. Обеспечить регистрацию биоаналогов моноклональных антител на
+      максимальном числе целевых рынков развивающихся стран
+  TagsItemsParentType2:
+    type: string
+    enum:
+      - CI 03
+    description: >-
+      СИ-03. Выйти на рынок ЕC с портфелем воспроизведённых и оригинальных
+      препаратов
+  TagsItemsParentType3:
+    type: string
+    enum:
+      - CI 04
+    description: >-
+      СИ-04. Перевести работу всех R&D подразделений в систему учета и
+      планирования ресурсов, организовать регулярное определение метрик
+      процессов
+  TagsItemsParentType4:
+    type: string
+    enum:
+      - CI 05
+    description: "СИ-05.\_Сократить сроки проведения клинических исследований за счет оптимизации процессов и дизайна клинических исследований"
+  TagsItemsParentType5:
+    type: string
+    enum:
+      - CI 06
+    description: "СИ-06. Создать алгоритм\_in silico\_предсказания структуры антител с заданной специфичностью"
+  TagsItemsParentType6:
+    type: string
+    enum:
+      - CI 07
+    description: >-
+      СИ-07. Создать in silico методологии получения оригинальных белков и малых
+      молекул
+  TagsItemsParentType7:
+    type: string
+    enum:
+      - CI 08
+    description: >-
+      СИ-08. Создать портфель следующих и потенциально лучших в классе
+      иммуноонкологических препаратов
+  TagsItemsParentType8:
+    type: string
+    enum:
+      - CI 09
+    description: >-
+      СИ-09. Создать первые в классе лекарственные препараты для борьбы с
+      метастазированием злокачественных опухолей
+  TagsItemsParentType9:
+    type: string
+    enum:
+      - CI 10
+    description: >-
+      СИ-10. Создать портфель потенциально лучших в классе генотерапевтических
+      препаратов
+  TagsItemsParentType10:
+    type: string
+    enum:
+      - CI 11
+    description: >-
+      СИ-11. Создать портфель оригинальных лекарственных препаратов для
+      применения в офтальмологии
+  TagsItemsParentType11:
+    type: string
+    enum:
+      - CI 12
+    description: >-
+      СИ-12. Создать технологии, способствующие развитию персонализированной
+      медицины
+  TagsItemsParentType12:
+    type: string
+    enum:
+      - CI 13
+    description: СИ-13. Создать вертикально-интегрированную медико-биологическую структуру
+  TagsItemsParentType13:
+    type: string
+    enum:
+      - CI 14
+    description: >-
+      СИ-14. Создать и модернизировать производственную и R&D инфраструктуру для
+      обеспечения текущих и будущих потребностей
+  TagsItemsParentType14:
+    type: string
+    enum:
+      - CI 15
+    description: >-
+      СИ-15. Развивать направление технологического трансфера в компании,
+      повысить эффективность и качество процессов
+  TagsItemsParentType15:
+    type: string
+    enum:
+      - CI 16
+    description: >-
+      СИ-16. Развить собственную технологическую платформу, направленную на
+      повышение независимости компании от поставщиков оборудования, сырья и
+      материалов и ведущую к повышению параметров качества и снижению
+      себестоимости
+  TagsItemsParentType16:
+    type: string
+    enum:
+      - CI 17
+    description: СИ-17. Повысить скорость и эффективность фармацевтической разработки
+  TagsItemsParentType17:
+    type: string
+    enum:
+      - CI 18
+    description: СИ-18. Интегрировать все процессы компании в систему менеджмента качества
+  TagsItemsParentType18:
+    type: string
+    enum:
+      - CI 19
+    description: СИ-19. Создать compliance систему BIOCAD
+  TagsItemsParentType19:
+    type: string
+    enum:
+      - CI 20
+    description: СИ-20. Сформировать позицию сильного партнера государства в лице BIOCAD
+  TagsItemsParentType20:
+    type: string
+    enum:
+      - CI 21
+    description: >-
+      СИ-21. Внедрить принципы управления персоналом, способствующие
+      непрерывному развитию компании
+  TagsItemsParentType21:
+    type: string
+    enum:
+      - CI 22
+    description: >-
+      СИ-22. Стать экспертным партнером государства в сфере образования в
+      области биотехнологий
+  TagsItemsParentType22:
+    type: string
+    enum:
+      - CI 23
+    description: >-
+      СИ-23. Развивать политику открытости компании в отношении общества, в том
+      числе на международном рынке
+  TagsItemsParentType23:
+    type: string
+    enum:
+      - CI 24
+    description: СИ-24. Создать систему Корпоративной социальной ответственности
+  TagsItemsParentType24:
+    type: string
+    enum:
+      - CI 25
+    description: >-
+      СИ-25. Создать базу контактов и коммуникаций компании на международном
+      уровне
+  TagsItemsParentType25:
+    type: string
+    enum:
+      - CI 26
+    description: СИ-26. Сформировать международный бренд BIOCAD
+  TagsItemsParentType26:
+    type: string
+    enum:
+      - CI 27
+    description: СИ-27. Построить собственную международную структуру BIOCAD
+  TagsItemsParentType27:
+    type: string
+    enum:
+      - CI 28
+    description: 'СИ-28. Сформировать команду, систему и процессы стратегического маркетинга'
+  TagsItemsParentType28:
+    type: string
+    enum:
+      - CI 29
+    description: >-
+      СИ-29. Организовать систему планирования и учета ресурсов, отвечающую
+      временным и качественным требованиям обработки и предоставления
+      необходимой для принятия управленческих решений информации
+  TagsItemsParentType29:
+    type: string
+    enum:
+      - CI 30
+    description: >-
+      СИ-30. Снизить затраты на производство препаратов по сравнению с текущими
+      показателями и по сравнению с аналогичными препаратами на рынке
+  TagsItemsParentType30:
+    type: string
+    enum:
+      - CI 31
+    description: >-
+      СИ-31. Разработать и внедрить во все процессы компании систему принятия
+      решений на базе data-driven и experience-driven подходов
+  TagsItemsParentType31:
+    type: string
+    enum:
+      - CI 32
+    description: >-
+      СИ-32. Реализовать современный контур информационной безопасности
+      компании, отвечающий новым технологическим угрозам
+  TagsItemsParentType32:
+    type: string
+    enum:
+      - CI 33
+    description: >-
+      СИ-33. Повысить проникновение информационных сервисов в основные
+      производственные процессы компании
+  ProjectList:
+    type: array
+    items:
+      required: true
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            type:
+              type: >-
+                TypeParentType0 | TypeParentType1 | TypeParentType2 |
+                TypeParentType3 | TypeParentType4 | TypeParentType5 |
+                TypeParentType6 | TypeParentType7 | TypeParentType8 |
+                TypeParentType9 | TypeParentType10 | TypeParentType11 |
+                TypeParentType12 | TypeParentType13 | TypeParentType14 |
+                TypeParentType15 | TypeParentType16 | TypeParentType17 |
+                TypeParentType18 | TypeParentType19 | TypeParentType20 |
+                TypeParentType21 | TypeParentType22 | TypeParentType23 |
+                TypeParentType24 | TypeParentType25 | TypeParentType26 |
+                TypeParentType27
+              displayName: ProjectType
+              description: >-
+                Тип проекта. Определяет предметную область, к которой
+                принадлежит проект.
+            index:
+              type: number
+              minimum: -1
+              description: Значение индекса проекта
+            status:
+              type: string
+              description: Значение статуса проекта
+            comment?:
+              type: string
+              description: Дополнительное описание проекта
+            manager?:
+              type: string
+              description: 'ID менеджера, ответственного за проект'
+            refs?:
+              type: array
+              items:
+                required: true
+                type: object
+                properties:
+                  type:
+                    type: >-
+                      TypeParentType0 | TypeParentType1 | TypeParentType2 |
+                      TypeParentType3 | TypeParentType4 | TypeParentType5 |
+                      TypeParentType6 | TypeParentType7 | TypeParentType8 |
+                      TypeParentType9 | TypeParentType10 | TypeParentType11
+                    displayName: Type
+                    description: Тип ссылки
+                  ref:
+                    type: string
+                    description: HTTPS адрес ссылки
+                    pattern: '^https://.*'
+                displayName: Ref
+                description: Ссылка
+              description: 'Набор ссылок, относящихся к проекту'
+            tags?:
+              type: array
+              items:
+                required: true
+                type: >-
+                  TagsItemsParentType0 | TagsItemsParentType1 |
+                  TagsItemsParentType2 | TagsItemsParentType3 |
+                  TagsItemsParentType4 | TagsItemsParentType5 |
+                  TagsItemsParentType6 | TagsItemsParentType7 |
+                  TagsItemsParentType8 | TagsItemsParentType9 |
+                  TagsItemsParentType10 | TagsItemsParentType11 |
+                  TagsItemsParentType12 | TagsItemsParentType13 |
+                  TagsItemsParentType14 | TagsItemsParentType15 |
+                  TagsItemsParentType16 | TagsItemsParentType17 |
+                  TagsItemsParentType18 | TagsItemsParentType19 |
+                  TagsItemsParentType20 | TagsItemsParentType21 |
+                  TagsItemsParentType22 | TagsItemsParentType23 |
+                  TagsItemsParentType24 | TagsItemsParentType25 |
+                  TagsItemsParentType26 | TagsItemsParentType27 |
+                  TagsItemsParentType28 | TagsItemsParentType29 |
+                  TagsItemsParentType30 | TagsItemsParentType31 |
+                  TagsItemsParentType32
+                displayName: Tag
+                description: Метка
+              description: Метки
+          displayName: ProjectMeta
+          description: Мета-информация проекта
+        log?:
+          type: object
+          properties:
+            timestamp:
+              type: number
+              description: UNIX-время в миллисекундах
+            user:
+              type: string
+              description: 'ID пользователя, сделавшего изменения'
+            message:
+              type: string
+              description: Сообщение-пояснение к изменению
+          displayName: Log
+      displayName: Project Data Free
+      description: Схема проекта без поля data
+
