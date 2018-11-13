@@ -1,0 +1,1 @@
+- Restrictions conflict in type 'TestTypeParentType0,importedAt': should be of type string and should be of type time-only [11.2:11.21]

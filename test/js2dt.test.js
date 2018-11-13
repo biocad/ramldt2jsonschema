@@ -17,9 +17,48 @@ describe('js2dt.js2dt()', function () {
       const data = js2dt.js2dt(jsonData, 'Product')
       expect(data).to.be.a('object')
       expect(data).to.have.nested.property('Product')
-      console.log(data)
-      expect(data).to.have.nested.property('Address.properties.state.enum.0', 'AA')
       expect(data).to.not.have.property('$schema')
+    })
+    it('should support enum', function () {
+      const jsdata = {
+        '$schema': 'http://json-schema.org/draft-06/schema#',
+        'title': 'SomethingWithAList',
+        'type': 'object',
+        'properties': {
+          'list': {
+            'type': 'array',
+            'items': {
+              'type': 'string',
+              'enum': ['NW', 'NE', 'SW', 'SE']
+            }
+          }
+        }
+      }
+      const data = js2dt.js2dt(JSON.stringify(jsdata), 'Product')
+      expect(data).to.have.nested.deep.property('Product.properties.list?.items.enum', ['NW', 'NE', 'SW', 'SE'])
+    })
+    it('should support union types', function () {
+      const jsdata = {
+        '$schema': 'http://json-schema.org/draft-06/schema#',
+        'title': 'SomethingWithAUnion',
+        'type': 'object',
+        'properties': {
+          'union': {
+            'type': ['string', 'null']
+          },
+          'arrOfUnion': {
+            'type': 'array',
+            'items': {
+              'type': ['string', 'null']
+            }
+          }
+        }
+      }
+      const data = js2dt.js2dt(JSON.stringify(jsdata), 'Product')
+      expect(data).to.have.nested.property('Product.properties.union?.0', 'string')
+      expect(data).to.have.nested.property('Product.properties.union?.1', 'nil')
+      expect(data).to.have.nested.property('Product.properties.arrOfUnion?.items.type.0', 'string')
+      expect(data).to.have.nested.property('Product.properties.arrOfUnion?.items.type.1', 'nil')
     })
     it('should retain boolean additionalProperties as boolean', function () {
       const jsdata = {
@@ -30,18 +69,13 @@ describe('js2dt.js2dt()', function () {
           'list': {
             'type': 'array',
             'items': [
-              {
-                'type': 'string',
-                'enum': ['NW', 'NE', 'SW', 'SE']
-              }
+              { 'type': 'string' }
             ]
           }
         },
         'additionalProperties': false
       }
       const data = js2dt.js2dt(JSON.stringify(jsdata), 'Product')
-      console.log(data.Product.properties['list?'])
-      expect(data).to.have.nested.deep.property('Product.properties.list?.items.0.enum', ['NW', 'NE', 'SW', 'SE'])
       expect(data).to.have.nested.property('Product.additionalProperties.', false)
     })
     it('should change additionalProperties: {} to true', function () {

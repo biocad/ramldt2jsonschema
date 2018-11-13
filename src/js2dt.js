@@ -77,9 +77,7 @@ class RamlConverter {
       outType.required = required
     }
 
-    if (typeof type === 'string') {
-      outType.type = type
-    } else if (typeof type === 'object') {
+    if (typeof type === 'object') {
       if (Object.keys(type).length === 0) {
         outType.type = 'any'
       } else if (type.type != null) {
@@ -112,13 +110,13 @@ class RamlConverter {
       outType.enum = type.enum
     }
 
-    switch (outType.type) {
-      case 'object': {
+    switch (true) {
+      case matchesType(outType.type, 'object'): {
         outType.properties = this.parseProps(type.properties, type.required)
         convertAdditionalProperties(outType, type.additionalProperties)
         break
       }
-      case 'array': {
+      case matchesType(outType.type, 'array'): {
         if (typeof type.items === 'object') {
           outType.items = this.parseType(type.items, true, prop + 'Items')
         } else if (Array.isArray(type.items)) {
@@ -126,14 +124,14 @@ class RamlConverter {
         }
         break
       }
-      case 'string': {
+      case matchesType(outType.type, 'string'): {
         if (isFileType(type)) {
           outType.media = type.media
           convertFileType(outType)
         }
         break
       }
-      case 'number': {
+      case matchesType(outType.type, 'number'): {
         if (typeof type.minimum === 'number') outType.minimum = type.minimum
         if (typeof type.maximum === 'number') outType.maximum = type.maximum
         if (this.draft !== '04') {
@@ -262,9 +260,10 @@ function convertAdditionalProperties (data, additionalProperties) {
  * @returns  {Object}
  */
 function convertType (data) {
-  if (data.type === 'null') {
-    data['type'] = 'nil'
+  if (data.type != null) {
+    data['type'] = convertNil(data.type)
   }
+
   return data
 }
 
@@ -275,7 +274,7 @@ function convertType (data) {
  * @returns  {boolean}
  */
 function isFileType (data) {
-  return (!!(data.type === 'string' &&
+  return (!!(matchesType(data.type, 'string') &&
              data.media &&
              data.media.binaryEncoding === 'binary'))
 }
@@ -311,7 +310,7 @@ function convertFileType (data) {
  * @returns  {Object}
  */
 function convertDateType (data) {
-  if (!(data.type === 'string' && data.pattern)) {
+  if (!(matchesType(data.type, 'string') && data.pattern)) {
     return data
   }
   const pattern = data.pattern
@@ -347,7 +346,7 @@ function convertDateType (data) {
  * @returns  {Object}
  */
 function convertDefinedFormat (data) {
-  if (!(data.type === 'string' && data.format)) {
+  if (!(matchesType(data.type, 'string') && data.format)) {
     return data
   }
   const format = data.format
@@ -426,6 +425,28 @@ function convertRef (data) {
   } else {
     return JSON.parse(fs.readFileSync(path.join(basePath, split[0])))
   }
+}
+
+/**
+ * Replace `null` type from JSON schema with corresponding `nil` type from RAML 1.0
+ *
+ * @param  {string | string[]} jsonSchemaType - JSON schema scalar type (single or union).
+ * @returns  {Object}
+ */
+function convertNil (jsonSchemaType) {
+  if (Array.isArray(jsonSchemaType)) {
+    return jsonSchemaType.map(convertNil)
+  }
+
+  return jsonSchemaType === 'null' ? 'nil' : jsonSchemaType
+}
+
+function matchesType (target, selected) {
+  if (Array.isArray(target)) {
+    return target.some(element => matchesType(element, selected))
+  }
+
+  return target === selected
 }
 
 function getCombinationsKey (data) {
