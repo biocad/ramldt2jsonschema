@@ -9,7 +9,7 @@
         "street_address": {"type": "string"},
         "city":           {"type": "string"},
         "state":          {"type": "string"},
-        "planet":         {"type": "null"}
+        "planet":         {"type": ["string","null"]}
       },
       "required": ["street_address", "city", "state"]
     }

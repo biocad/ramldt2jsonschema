@@ -55,10 +55,8 @@ describe('js2dt.js2dt()', function () {
         }
       }
       const data = js2dt.js2dt(JSON.stringify(jsdata), 'Product')
-      expect(data).to.have.nested.property('Product.properties.union?.0', 'string')
-      expect(data).to.have.nested.property('Product.properties.union?.1', 'nil')
-      expect(data).to.have.nested.property('Product.properties.arrOfUnion?.items.type.0', 'string')
-      expect(data).to.have.nested.property('Product.properties.arrOfUnion?.items.type.1', 'nil')
+      expect(data).to.have.nested.property('Product.properties.union?', 'string | nil')
+      expect(data).to.have.nested.property('Product.properties.arrOfUnion?.items.type', 'string | nil')
     })
     it('should retain boolean additionalProperties as boolean', function () {
       const jsdata = {

@@ -18,8 +18,8 @@
 const path = require('path')
 const parser = require('raml-1-parser')
 const helpers = require('./helpers')
-const fs = require('fs');
-const { expect, assert } = require('chai');
+const fs = require('fs')
+const { expect, assert } = require('chai')
 
 const js2dt = require('../../src/js2dt')
 const cli = require('../../src/js2dt_cli')
@@ -32,7 +32,7 @@ const EXAMPLES_FOLDER = path.join(__dirname, 'json')
  */
 function getValidationError (error) {
   if (!error.parserErrors) {
-    return [error.message];
+    return [error.message]
   }
   return error.parserErrors.map(function (el) {
     return '- ' + el.message + ' [' +
@@ -41,53 +41,64 @@ function getValidationError (error) {
   })
 }
 
-function log(errors) {
-  console.log('FAIL (RAML validation):');
+function log (errors) {
+  console.log('FAIL (RAML validation):')
   errors.forEach(errMessage => console.log(errMessage))
 }
 
 describe('js2dt integration test', () => {
   helpers.forEachFileIn(EXAMPLES_FOLDER, (filepath) => {
-    if (!(filepath.endsWith('.json'))) return;
-    
+    if (!(filepath.endsWith('.json'))) return
+
     /**
      * Test file by running js2dt script on it and then validating
      * with raml-1-parser.
      */
-    if (filepath.endsWith('.fail.json')) it(`should fail ${filepath}`, () => {
-      const typeName = 'TestType'
-      js2dt.setBasePath(EXAMPLES_FOLDER)
-      
-      let thrown;
-      
-      try {
+    if (filepath.endsWith('.fail.json')) {
+      it(`should fail ${filepath}`, () => {
+        const typeName = 'TestType'
+        js2dt.setBasePath(EXAMPLES_FOLDER)
+
+        let thrown
+
+        try {
+          const raml = cli(filepath, typeName)
+          parser.parseRAMLSync(raml, { 'rejectOnErrors': true })
+        } catch (error) {
+          thrown = error
+        }
+
+        assert(thrown !== undefined, 'should have thrown')
+
+        const snapshotPath = path.join(filepath.replace('.fail.json', '.err.snap'))
+        const snapshotText = getValidationError(thrown).join('\n')
+        if (fs.existsSync(snapshotPath)) {
+          expect(fs.readFileSync(snapshotPath, { encoding: 'utf8' })).to.equal(snapshotText, 'should match snapshot')
+        } else {
+          fs.writeFile(snapshotPath, snapshotText, { encoding: 'utf8' }, () => {})
+        }
+      })
+    } else {
+      it(`should convert ${filepath}`, () => {
+        const typeName = 'TestType'
+        js2dt.setBasePath(EXAMPLES_FOLDER)
         const raml = cli(filepath, typeName)
-        parser.parseRAMLSync(raml, { 'rejectOnErrors': true })
-      } catch (error) {
-        thrown = error;
-      }
 
-      assert(thrown !== undefined, 'should have thrown');
+        const snapshotPath = path.join(filepath.replace('.json', '.raml.snap'))
+        const snapshotText = raml
+        if (fs.existsSync(snapshotPath)) {
+          expect(fs.readFileSync(snapshotPath, { encoding: 'utf8' })).to.equal(snapshotText, 'should match snapshot')
+        } else {
+          fs.writeFile(snapshotPath, snapshotText, { encoding: 'utf8' }, () => {})
+        }
 
-      const snapshotPath = path.join(filepath.replace('.fail.json', '.fail.snap'));
-      const snapshotText = getValidationError(thrown).join('\n');
-      if (fs.existsSync(snapshotPath)) {
-          assert(fs.readFileSync(snapshotPath, { encoding: 'utf8' }) === snapshotText);
-      } else {
-        fs.writeFile(snapshotPath, snapshotText, { encoding: 'utf8' }, () => {});
-      }
-    }) 
-    else it(`should convert ${filepath}`, () => {
-      const typeName = 'TestType'
-      js2dt.setBasePath(EXAMPLES_FOLDER)
-      const raml = cli(filepath, typeName)
-
-      try {
-        parser.parseRAMLSync(raml, { 'rejectOnErrors': true })
-      } catch (error) {
-        log(getValidationError(error));
-        throw error
-      }
-    })
+        try {
+          parser.parseRAMLSync(raml, { 'rejectOnErrors': true })
+        } catch (error) {
+          log(getValidationError(error))
+          throw error
+        }
+      })
+    }
   })
 })

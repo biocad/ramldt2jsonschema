@@ -101,6 +101,8 @@ class RamlConverter {
     if (combsKey && outType.type) {
       outType[combsKey] = type[combsKey]
       setCombinationsTypes(outType, combsKey)
+    } else if (Array.isArray(outType.type)) {
+      outType.type = convertNil(outType.type).join(' | ')
     }
 
     if (type.const) {
@@ -110,39 +112,29 @@ class RamlConverter {
       outType.enum = type.enum
     }
 
-    switch (true) {
-      case matchesType(outType.type, 'object'): {
-        outType.properties = this.parseProps(type.properties, type.required)
-        convertAdditionalProperties(outType, type.additionalProperties)
-        break
+    if (matchesType(outType.type, 'object')) {
+      outType.properties = this.parseProps(type.properties, type.required)
+      convertAdditionalProperties(outType, type.additionalProperties)
+    }
+    if (matchesType(outType.type, 'array')) {
+      if (typeof type.items === 'object') {
+        outType.items = this.parseType(type.items, true, prop + 'Items')
+      } else if (Array.isArray(type.items)) {
+        outType.items = type.items.map(i => this.parseType(i, true, prop + 'Item' + i))
       }
-      case matchesType(outType.type, 'array'): {
-        if (typeof type.items === 'object') {
-          outType.items = this.parseType(type.items, true, prop + 'Items')
-        } else if (Array.isArray(type.items)) {
-          outType.items = type.items.map(i => this.parseType(i, true, prop + 'Item' + i))
-        }
-        break
+    }
+    if (matchesType(outType.type, 'string')) {
+      if (isFileType(type)) {
+        outType.media = type.media
+        convertFileType(outType)
       }
-      case matchesType(outType.type, 'string'): {
-        if (isFileType(type)) {
-          outType.media = type.media
-          convertFileType(outType)
-        }
-        break
-      }
-      case matchesType(outType.type, 'number'): {
-        if (typeof type.minimum === 'number') outType.minimum = type.minimum
-        if (typeof type.maximum === 'number') outType.maximum = type.maximum
-        if (this.draft !== '04') {
-          if (typeof type.exclusiveMinimum === 'number') outType.minimum = type.exclusiveMinimum
-          if (typeof type.exclusiveMaximum === 'number') outType.maximum = type.exclusiveMaximum
-        }
-        break
-      }
-      default: {
-        // nothing for now
-        break
+    }
+    if (matchesType(outType.type, 'number')) {
+      if (typeof type.minimum === 'number') outType.minimum = type.minimum
+      if (typeof type.maximum === 'number') outType.maximum = type.maximum
+      if (this.draft !== '04') {
+        if (typeof type.exclusiveMinimum === 'number') outType.minimum = type.exclusiveMinimum
+        if (typeof type.exclusiveMaximum === 'number') outType.maximum = type.exclusiveMaximum
       }
     }
 
@@ -444,6 +436,10 @@ function convertNil (jsonSchemaType) {
 function matchesType (target, selected) {
   if (Array.isArray(target)) {
     return target.some(element => matchesType(element, selected))
+  }
+
+  if (typeof target === 'string' && target.includes(' | ')) {
+    return target.split(' | ').some(element => matchesType(element, selected))
   }
 
   return target === selected

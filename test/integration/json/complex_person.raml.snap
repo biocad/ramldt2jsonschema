@@ -1,0 +1,26 @@
+#%RAML 1.0 Library
+types:
+  Address:
+    type: object
+    properties:
+      street_address: string
+      city: string
+      state: string
+      planet?: string | nil
+  TestType:
+    type: object
+    properties:
+      firstName: string
+      lastName: string
+      age?:
+        type: integer
+        description: Age in years
+      homeAddress: Address
+      workAddress?: Address
+      relativesAddresses?:
+        type: array
+        items:
+          required: true
+          type: Address
+      favoriteMovie?: nil
+    displayName: Complex Person Schema

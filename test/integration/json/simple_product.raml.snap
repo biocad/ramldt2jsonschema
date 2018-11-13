@@ -1,0 +1,21 @@
+#%RAML 1.0 Library
+types:
+  TestType:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The unique identifier for a product
+      name:
+        type: string
+        description: Name of the product
+      price:
+        type: number
+        minimum: 0
+      tags?:
+        type: array
+        items:
+          required: true
+          type: string
+    displayName: Product
+    description: A product from Acme's catalog

@@ -1,0 +1,11 @@
+#%RAML 1.0 Library
+types:
+  TestType:
+    type: object
+    properties:
+      firstName: string
+      lastName: string
+      age?:
+        type: integer
+        description: Age in years
+    displayName: Example Schema

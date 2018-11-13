@@ -1,0 +1,38 @@
+#%RAML 1.0 Library
+types:
+  TestType:
+    type: object
+    properties:
+      dtstart:
+        type: string
+        description: Event starting time
+        pattern: date-time
+      dtend?:
+        type: string
+        description: Event ending time
+        pattern: date-time
+      summary: string
+      location?: string
+      url?:
+        type: string
+        pattern: uri
+      duration?:
+        type: string
+        description: Event duration
+        pattern: time
+      rdate?:
+        type: string
+        description: Recurrence date
+        pattern: date-time
+      rrule?:
+        type: string
+        description: Recurrence rule
+      category?: string
+      description?: string
+      geo?:
+        type: object
+        properties:
+          latitude?: number
+          longitude?: number
+        description: A geographical coordinate
+    description: A representation of an event
